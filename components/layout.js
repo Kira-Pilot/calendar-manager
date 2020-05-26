@@ -3,36 +3,29 @@ import styles from './layout.module.scss'
 import utilStyles from '../styles/utils.module.scss'
 import Link from 'next/link'
 
-const name = 'Calendar Manager'
+export const appName = 'Calendar Manager'
 export const siteTitle = 'Calendar Manager'
 
 export default function Layout({ children, home }) {
   return (
     <div className={styles.container}>
       <Head>
-        <link rel="icon" href="/favicon.ico" />
+        <title>{siteTitle}</title>
+        <link rel="icon" href="/images/favicon.ico" />
         <meta
           name="description"
-          content="Learn how to build a personal website using Next.js"
+          content="Awesome calendar app for scheduling one-on-ones"
         />
-        <meta
-          property="og:image"
-          content={`https://og-image.now.sh/${encodeURI(
-            siteTitle
-          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-        />
-        <meta name="og:title" content={siteTitle} />
-        <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className={styles.header}>
         {home ? (
           <>
             <img
               src="/images/analog-clock.svg"
-              className={`${styles.headerHomeImage} ${utilStyles.borderCircle}`}
-              alt={name}
+              className={`${styles.headerHomeImage}`}
+              alt={appName}
             />
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={utilStyles.heading2Xl}>{appName}</h1>
           </>
         ) : (
           <>
@@ -40,14 +33,14 @@ export default function Layout({ children, home }) {
               <a>
                 <img
                   src="/images/analog-clock.svg"
-                  className={`${styles.headerImage} ${utilStyles.borderCircle}`}
-                  alt={name}
+                  className={`${styles.headerImage}`}
+                  alt={appName}
                 />
               </a>
             </Link>
             <h2 className={utilStyles.headingLg}>
               <Link href="/">
-                <a className={utilStyles.colorInherit}>{name}</a>
+                <a className={utilStyles.colorInherit}>{appName}</a>
               </Link>
             </h2>
           </>
