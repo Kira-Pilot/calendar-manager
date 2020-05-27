@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 const useCustomForm = ({
   initialValues,
@@ -10,23 +10,9 @@ const useCustomForm = ({
   const [onSubmitting, setOnSubmitting] = useState(false);
   const [onBlur, setOnBlur] = useState(false);
 
-  const formRendered = useRef(true);
-
-  useEffect(() => {
-    if (formRendered.current) {
-      setValues(initialValues);
-      setErrors({});
-      setTouched({});
-      setOnSubmitting(false);
-      setOnBlur(false);
-    }
-    formRendered.current = false;
-  }, [initialValues]);
-
   const handleChange = (event) => {
     const { target } = event;
     const { name, value } = target;
-    event.persist();
     setValues({ ...values, [name]: value });
 };
 

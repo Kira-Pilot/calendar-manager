@@ -1,11 +1,10 @@
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import Layout from '../components/Layout'
 import utilStyles from '../styles/utils.module.scss'
 import useCustomForm from '../hooks/useCustomForm'
 
 export default function Home() {
   const frequencyOptions = ["weekly", "bi-weekly", "monthly", "quarterly"];
-
   const initialValues = {
     availableHours: 0,
     userTitle: ""
