@@ -1,38 +1,53 @@
-import {useState} from 'react';
+import {useState} from 'react'
 import Layout from '../components/Layout'
 import utilStyles from '../styles/utils.module.scss'
+import useCustomForm from '../hooks/useCustomForm'
 
 export default function Home() {
   const frequencyOptions = ["weekly", "bi-weekly", "monthly", "quarterly"];
 
+  const initialValues = {
+    availableHours: 0,
+    userTitle: ""
+  }
+
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit
+  } = useCustomForm({
+    initialValues,
+    onSubmit: values => console.log({ values })
+  });
+
   const newContact = {contactName: '', contactTitle: '', contactFrequency: null}
   const [contactList, setContactState] = useState([{...newContact}]);
 
-  let [availableHours, setAvailableHours] = useState(0);
-
   function addContact() {
     setContactState([...contactList, {...newContact}]);
-  }
-
-  function updateHours(e) {
-    setAvailableHours((availableHours = e.target.value));
-    console.log("Avail", availableHours);
   }
 
   function updateContact(e) {
     const updatedContacts = [...contactList];
     updatedContacts[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
     setContactState(updatedContacts);
-    console.log('all set', updatedContacts)
   }
 
   return (
   <Layout home>
       <section className={utilStyles.headingMd}>
-        <form>
+        <form onSubmit={handleSubmit}>
           <h1 htmlFor="user" className="userName">Kira Pilot</h1>
+
           <label htmlFor="availableHours">Available # Hours</label>
-          <input type="hours" name="hours" id="hours" onChange={updateHours}/>
+          <input type="text" name="availableHours" id="availableHours" value={values.availableHours} onChange={handleChange} required/>
+
+          <label htmlFor="userTitle">My Title</label>
+          <input type="text" name="userTitle" id="userTitle" value={values.userTitle} onChange={handleChange}/>
+
           <input type="button" value="Add a New Contact" onClick={addContact}/>
 
           {contactList.map((val, i) => {
