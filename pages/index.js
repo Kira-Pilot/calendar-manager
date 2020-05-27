@@ -3,18 +3,23 @@ import Layout from '../components/Layout'
 import utilStyles from '../styles/utils.module.scss'
 import useCustomForm from '../hooks/useCustomForm'
 
-export default function Home() {
-  const frequencyOptions = ["weekly", "bi-weekly", "monthly", "quarterly"];
-  const initialValues = {
-    availableHours: 0,
-    userTitle: ""
-  }
+const frequencyOptions = ["weekly", "bi-weekly", "monthly", "quarterly"];
 
+const initialValues = {
+  availableHours: 0,
+  userTitle: '',
+  contactList: []
+}
+
+const newContact = {contactName: '', contactTitle: '', contactFrequency: null}
+
+export default function Home() {
   const {
     values,
     errors,
     touched,
-    handleChange,
+    updateValue,
+    handleFormChange,
     handleBlur,
     handleSubmit
   } = useCustomForm({
@@ -22,7 +27,6 @@ export default function Home() {
     onSubmit: values => console.log({ values })
   });
 
-  const newContact = {contactName: '', contactTitle: '', contactFrequency: null}
   const [contactList, setContactState] = useState([{...newContact}]);
 
   function addContact() {
@@ -33,6 +37,7 @@ export default function Home() {
     const updatedContacts = [...contactList];
     updatedContacts[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
     setContactState(updatedContacts);
+    updateValue("contactList", contactList);
   }
 
   return (
@@ -42,10 +47,10 @@ export default function Home() {
           <h1 htmlFor="user" className="userName">Kira Pilot</h1>
 
           <label htmlFor="availableHours">Available # Hours</label>
-          <input type="text" name="availableHours" id="availableHours" value={values.availableHours} onChange={handleChange} required/>
+          <input type="text" name="availableHours" id="availableHours" value={values.availableHours} onChange={handleFormChange}/>
 
           <label htmlFor="userTitle">My Title</label>
-          <input type="text" name="userTitle" id="userTitle" value={values.userTitle} onChange={handleChange}/>
+          <input type="text" name="userTitle" id="userTitle" value={values.userTitle} onChange={handleFormChange}/>
 
           <input type="button" value="Add a New Contact" onClick={addContact}/>
 

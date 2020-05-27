@@ -4,39 +4,44 @@ const useCustomForm = ({
   initialValues,
   onSubmit
 }) => {
-  const [values, setValues] = useState(initialValues || {});
-  const [errors, setErrors] = useState({});
-  const [touched, setTouched] = useState({});
-  const [onSubmitting, setOnSubmitting] = useState(false);
-  const [onBlur, setOnBlur] = useState(false);
+    const [values, setValues] = useState(initialValues || {});
+    const [errors, setErrors] = useState({});
+    const [touched, setTouched] = useState({});
+    const [onSubmitting, setOnSubmitting] = useState(false);
+    const [onBlur, setOnBlur] = useState(false);
 
-  const handleChange = (event) => {
-    const { target } = event;
-    const { name, value } = target;
-    setValues({ ...values, [name]: value });
-};
+    const updateValue = (name, value) => {
+        setValues({ ...values, [name]: value})
+    }
 
-  const handleBlur = (event) => {
-    const { target } = event;
-    const { name } = target;
-    setTouched({ ...touched, [name]: true });
-    setErrors({ ...errors });
-};
+    const handleFormChange = (event) => {
+        const { target } = event;
+        const { name, value } = target;
+        updateValue(name, value);
+    };
 
-  const handleSubmit = (event) => {
-    if (event) event.preventDefault();
-    setErrors({ ...errors });
-    onSubmit({ values, errors });
-  };
+    const handleBlur = (event) => {
+        const { target } = event;
+        const { name } = target;
+        setTouched({ ...touched, [name]: true });
+        setErrors({ ...errors });
+    };
 
-  return {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit
-  };
+    const handleSubmit = (event) => {
+        if (event) event.preventDefault();
+        setErrors({ ...errors });
+        onSubmit({ values, errors });
+    };
+
+    return {
+        values,
+        errors,
+        touched,
+        updateValue,
+        handleFormChange,
+        handleBlur,
+        handleSubmit
+    };
 };
 
 export default useCustomForm;
