@@ -1,10 +1,10 @@
-import Head from 'next/head'
-import styles from './layout.module.scss'
-import utilStyles from '../styles/utils.module.scss'
-import Link from 'next/link'
+import Head from 'next/head';
+import Link from 'next/link';
+import styles from './layout.module.scss';
+import utilStyles from '../styles/utils.module.scss';
 
-export const appName = 'Calendar Manager'
-export const siteTitle = 'Calendar Manager'
+export const appName = 'Calendar Manager';
+export const siteTitle = 'Calendar Manager';
 
 export default function Layout({ children, home }) {
   return (
@@ -55,5 +55,5 @@ export default function Layout({ children, home }) {
         </div>
       )}
     </div>
-  )
+  );
 }

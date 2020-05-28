@@ -1,63 +1,64 @@
-import {useState, useRef} from 'react'
-import Layout from '../components/Layout'
-import utilStyles from '../styles/utils.module.scss'
-import useCustomForm from '../hooks/useCustomForm'
+import React, { useState } from 'react';
+import Layout from '../components/Layout';
+import utilStyles from '../styles/utils.module.scss';
+import useCustomForm from '../hooks/useCustomForm';
 
-const frequencyOptions = ["weekly", "bi-weekly", "monthly", "quarterly"];
+const frequencyOptions = ['weekly', 'bi-weekly', 'monthly', 'quarterly'];
 
 const initialValues = {
   availableHours: 0,
   userTitle: '',
-  contactList: []
-}
+  contactList: [],
+};
 
-const newContact = {contactName: '', contactTitle: '', contactFrequency: null}
+const newContact = { contactName: '', contactTitle: '', contactFrequency: null };
 
 export default function Home() {
   const {
     values,
-    errors,
-    touched,
     updateValue,
     handleFormChange,
-    handleBlur,
-    handleSubmit
+    handleSubmit,
   } = useCustomForm({
     initialValues,
-    onSubmit: values => console.log({ values })
+    onSubmit: (vals) => console.log({ vals }),
   });
 
-  const [contactList, setContactState] = useState([{...newContact}]);
+  const [contactList, setContactState] = useState([{ ...newContact }]);
 
   function addContact() {
-    setContactState([...contactList, {...newContact}]);
+    setContactState([...contactList, { ...newContact }]);
   }
 
   function updateContact(e) {
     const updatedContacts = [...contactList];
     updatedContacts[e.target.dataset.idx][e.target.dataset.name] = e.target.value;
     setContactState(updatedContacts);
-    updateValue("contactList", contactList);
+    updateValue('contactList', contactList);
   }
 
   return (
-  <Layout home>
+    <Layout home>
       <section className={utilStyles.headingMd}>
         <form onSubmit={handleSubmit}>
           <h1 htmlFor="user" className="userName">Kira Pilot</h1>
 
-          <label htmlFor="availableHours">Available # Hours</label>
-          <input type="text" name="availableHours" id="availableHours" value={values.availableHours} onChange={handleFormChange}/>
+          <label htmlFor="availableHours">
+            Available # Hours
+            <input type="text" name="availableHours" id="availableHours" value={values.availableHours} onChange={handleFormChange} />
+          </label>
 
-          <label htmlFor="userTitle">My Title</label>
-          <input type="text" name="userTitle" id="userTitle" value={values.userTitle} onChange={handleFormChange}/>
+          <label htmlFor="userTitle">
+            My Title
+            <input type="text" name="userTitle" id="userTitle" value={values.userTitle} onChange={handleFormChange} />
+          </label>
 
-          <input type="button" value="Add a New Contact" onClick={addContact}/>
+          <input type="button" value="Add a New Contact" onClick={addContact} />
 
           {contactList.map((val, i) => {
             const nameId = `name-${i}`;
             const titleId = `title=${i}`;
-            const frequencyId = `frequency-${i}`
+            const frequencyId = `frequency-${i}`;
 
             return (
               <div key={`contact-${i}`}>
@@ -84,26 +85,26 @@ export default function Home() {
                 />
 
                 <label htmlFor={frequencyId}>Frequency</label>
-                <select 
+                <select
                   name="contactFrequency"
                   id="frequencyId"
                   data-idx={i}
                   data-name="contactFrequency"
-                  onChange={updateContact}>
-                    {frequencyOptions.map((o, i) => {
-                      return (<option key={i} value={o}>{o}</option>)
-                    })}
+                  onChange={updateContact}
+                >
+                  {frequencyOptions.map((o, i) => (<option key={i} value={o}>{o}</option>))}
                 </select>
 
               </div>
-            )
+            );
           })}
 
 
-          <input type="submit" value="Generate Report"/>
+          <input type="submit" value="Generate Report" />
         </form>
       </section>
-      <style jsx>{`
+      <style jsx>
+        {`
         form {
           border: 0.15rem solid #000;
           width: 50%;
@@ -116,7 +117,9 @@ export default function Home() {
         input[type="button"], input[type="submit"] { margin: 1rem auto; }
 
         select { text-transform: capitalize; }
-      `}</style>
+      `}
+
+      </style>
     </Layout>
-  )
+  );
 }
