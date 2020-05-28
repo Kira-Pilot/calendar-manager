@@ -1,3 +1,5 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 import Head from 'next/head';
 import Link from 'next/link';
 import styles from './layout.module.scss';
@@ -30,17 +32,22 @@ export default function Layout({ children, home }) {
         ) : (
           <>
             <Link href="/">
-              <a>
+              <button type="button" className="navButton">
                 <img
                   src="/images/analog-clock.svg"
                   className={`${styles.headerImage}`}
                   alt={appName}
                 />
-              </a>
+              </button>
             </Link>
             <h2 className={utilStyles.headingLg}>
               <Link href="/">
-                <a className={utilStyles.colorInherit}>{appName}</a>
+                <button
+                  type="button"
+                  className={`navButton ${utilStyles.colorInherit}`}
+                >
+                  {appName}
+                </button>
               </Link>
             </h2>
           </>
@@ -50,10 +57,25 @@ export default function Layout({ children, home }) {
       {!home && (
         <div className={styles.backToHome}>
           <Link href="/">
-            <a>← Back to home</a>
+            <button type="button" className="navButton">
+              ← Back to home
+            </button>
           </Link>
         </div>
       )}
     </div>
   );
 }
+
+Layout.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
+  home: PropTypes.bool,
+};
+
+Layout.defaultProps = {
+  children: null,
+  home: false,
+};
