@@ -3,57 +3,24 @@ import PropTypes from 'prop-types';
 import Layout from '../components/layout/Layout';
 import utilStyles from '../styles/utils.module.scss';
 import useCustomForm from '../hooks/useCustomForm';
+import getAllContacts from '../lib/contacts';
 
 const frequencyOptions = ['weekly', 'bi-weekly', 'monthly', 'quarterly'];
 
 export async function getStaticProps() {
-  const contacts = [
-    {
-      id: '1',
-      name: 'Sam Klon',
-      title: 'Software Engineer',
-      frequency: 'weekly',
-      created: '1591723800',
-      override: '',
-    },
-    {
-      id: '2',
-      name: 'Alex Low',
-      title: 'Engineering Manager',
-      frequency: 'monthly',
-      created: '1589284800',
-      override: '',
-    },
-    {
-      id: '3',
-      name: 'Ma Pilot',
-      title: 'Mother',
-      frequency: 'quarterly',
-      created: '1586332800',
-      override: '',
-    },
-    {
-      id: '4',
-      name: 'Marge Cat',
-      title: 'Feline',
-      frequency: 'bi-weekly',
-      created: '1586552400',
-      override: '',
-    },
-  ];
-
+  const allContacts = getAllContacts();
   return {
     props: {
-      contacts,
+      allContacts,
     },
   };
 }
 
-export default function Contacts({ contacts }) {
+export default function Contacts({ allContacts }) {
   const form = {
     availableHours: 0,
     userTitle: '',
-    contactList: contacts,
+    contactList: allContacts,
   };
 
   const { values, updateValue, handleFormChange, handleSubmit } = useCustomForm(
@@ -88,6 +55,7 @@ export default function Contacts({ contacts }) {
 
   useEffect(() => {
     if (idCount === 0) return;
+
     newContact.id = idCount.toString();
     setNewContact({ ...newContact });
     setContactsState([...contactList, newContact]);
@@ -222,9 +190,9 @@ const Contact = PropTypes.shape({
 });
 
 Contacts.propTypes = {
-  contacts: PropTypes.arrayOf(Contact),
+  allContacts: PropTypes.arrayOf(Contact),
 };
 
 Contacts.defaultProps = {
-  contacts: [],
+  allContacts: [],
 };

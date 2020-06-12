@@ -9,6 +9,6 @@ export async function getStaticPaths() {
   // returns a list of possible IDs
 }
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
   // returns data for the contact
 }
